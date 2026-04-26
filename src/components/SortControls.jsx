@@ -1,12 +1,14 @@
 import { SORT_OPTIONS } from '../hooks/useSortedRepos.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function SortControls({ sortBy, direction, onSortByChange, onToggleDirection }) {
   const isDesc = direction === 'desc';
+  const { t } = useLanguage();
 
   return (
     <div className="d-flex gap-2 align-items-center">
       <label htmlFor="sort-by" className="text-muted small mb-0 me-1 d-none d-sm-inline">
-        Sort by
+        {t('common.sortBy')}
       </label>
       <select
         id="sort-by"
@@ -17,15 +19,15 @@ export default function SortControls({ sortBy, direction, onSortByChange, onTogg
       >
         {SORT_OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>
-            {option.label}
+            {t(`sort.${option.value}`)}
           </option>
         ))}
       </select>
       <button
         type="button"
         className="btn btn-outline-secondary btn-sm"
-        title={isDesc ? 'Descending' : 'Ascending'}
-        aria-label={`Sort ${isDesc ? 'descending' : 'ascending'}`}
+        title={isDesc ? t('common.descending') : t('common.ascending')}
+        aria-label={`Sort ${isDesc ? t('common.descending') : t('common.ascending')}`}
         onClick={onToggleDirection}
       >
         <i className={`bi bi-sort-${isDesc ? 'down' : 'up'}`} />

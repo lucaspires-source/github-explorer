@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import { LanguageProvider } from './context/LanguageContext.jsx';
 import Navbar from './components/Navbar.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -9,7 +10,7 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 
 export default function App() {
   return (
-    <>
+    <LanguageProvider>
       <Navbar />
       <main className="container-xl py-4 px-3">
         <ErrorBoundary>
@@ -21,6 +22,6 @@ export default function App() {
           </Routes>
         </ErrorBoundary>
       </main>
-    </>
+    </LanguageProvider>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { useRecentSearches } from '../hooks/useRecentSearches.js';
 
 const GITHUB_ICON_PATH =
@@ -11,6 +12,7 @@ export default function HomePage() {
   const [error, setError] = useState(null);
   const { searches } = useRecentSearches();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const goToUser = (name) => navigate(`/user/${encodeURIComponent(name)}`);
 
@@ -18,7 +20,7 @@ export default function HomePage() {
     event.preventDefault();
     const trimmed = username.trim();
     if (!trimmed) {
-      setError('Please enter a username.');
+      setError(t('home.errorEmpty'));
       return;
     }
     setError(null);
@@ -33,17 +35,15 @@ export default function HomePage() {
             <path d={GITHUB_ICON_PATH} />
           </svg>
         </div>
-        <h1 className="fw-bold mb-1">GitHub Explorer</h1>
-        <p className="text-muted mb-4">
-          Search for any GitHub user to explore their profile and repositories
-        </p>
+        <h1 className="fw-bold mb-1">{t('home.title')}</h1>
+        <p className="text-muted mb-4">{t('home.subtitle')}</p>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="input-group input-group-lg shadow-sm">
             <input
               type="text"
               className="form-control"
-              placeholder="Enter a GitHub username…"
+              placeholder={t('home.placeholder')}
               autoComplete="off"
               spellCheck="false"
               value={username}
@@ -55,7 +55,7 @@ export default function HomePage() {
             />
             <button type="submit" className="btn btn-dark px-4">
               <i className="bi bi-search me-1" />
-              Search
+              {t('home.searchButton')}
             </button>
           </div>
           {error && <div className="text-danger small mt-2 text-start ps-1">{error}</div>}
@@ -63,7 +63,7 @@ export default function HomePage() {
 
         {searches.length > 0 && (
           <div className="mt-4 text-start">
-            <p className="text-muted small mb-2">Recent searches</p>
+            <p className="text-muted small mb-2">{t('home.recentSearches')}</p>
             <div className="d-flex flex-wrap gap-2">
               {searches.map((name) => (
                 <button

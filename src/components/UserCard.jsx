@@ -1,4 +1,5 @@
 import { formatCount } from '../utils/format.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 function Stat({ value, label }) {
   return (
@@ -19,6 +20,8 @@ function DetailLine({ icon, children }) {
 }
 
 export default function UserCard({ user }) {
+  const { t } = useLanguage();
+
   const blogUrl = user.blog
     ? (user.blog.startsWith('http') ? user.blog : `https://${user.blog}`)
     : null;
@@ -38,8 +41,8 @@ export default function UserCard({ user }) {
         {user.bio && <p className="small text-secondary mb-3">{user.bio}</p>}
 
         <div className="d-flex gap-2 justify-content-center mb-3">
-          <Stat value={user.followers} label="Followers" />
-          <Stat value={user.following} label="Following" />
+          <Stat value={user.followers} label={t('common.followers')} />
+          <Stat value={user.following} label={t('common.following')} />
         </div>
 
         {user.email && <DetailLine icon="bi-envelope">{user.email}</DetailLine>}
@@ -63,7 +66,7 @@ export default function UserCard({ user }) {
           className="btn btn-dark btn-sm w-100 mt-3"
         >
           <i className="bi bi-box-arrow-up-right me-1" />
-          GitHub Profile
+          {t('common.githubProfile')}
         </a>
       </div>
     </div>

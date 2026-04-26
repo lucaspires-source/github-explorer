@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 
 import LanguageBadge from './LanguageBadge.jsx';
 import { formatCount, timeAgo } from '../utils/format.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 function RepoCard({ repo }) {
   const [owner, name] = repo.full_name.split('/');
+  const { t } = useLanguage();
 
   return (
     <Link
@@ -21,7 +23,7 @@ function RepoCard({ repo }) {
             )}
           </div>
           {repo.fork && (
-            <span className="badge bg-light text-secondary border flex-shrink-0">Fork</span>
+            <span className="badge bg-light text-secondary border flex-shrink-0">{t('repo.fork')}</span>
           )}
         </div>
 

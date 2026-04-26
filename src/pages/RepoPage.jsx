@@ -7,18 +7,20 @@ import { RepoPageSkeleton } from '../components/Skeleton.jsx';
 
 import { getErrorMessage } from '../api/github.js';
 import { useRepo } from '../hooks/useGithub.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function RepoPage() {
   const { owner, name } = useParams();
   const { data: repo, isLoading, isError, error } = useRepo(owner, name);
+  const { t } = useLanguage();
 
   if (isLoading) return <RepoPageSkeleton />;
 
   if (isError) {
     return (
       <ErrorState
-        message={getErrorMessage(error, 'Could not load repository details.')}
-        actionLabel="Go back"
+        message={getErrorMessage(error, t('repo.errorLoad'))}
+        actionLabel={t('repo.goBack')}
         onAction={() => window.history.back()}
       />
     );
@@ -26,7 +28,9 @@ export default function RepoPage() {
 
   return (
     <>
-      <BackButton to={`/user/${repo.owner.login}`}>Back to {repo.owner.login}</BackButton>
+      <BackButton to={`/user/${repo.owner.login}`}>
+        {t('repo.backTo', { owner: repo.owner.login })}
+      </BackButton>
       <RepoDetails repo={repo} />
     </>
   );

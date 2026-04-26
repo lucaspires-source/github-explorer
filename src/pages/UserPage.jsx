@@ -12,10 +12,12 @@ import { getErrorMessage } from '../api/github.js';
 import { useUser, useUserRepos } from '../hooks/useGithub.js';
 import { useRecentSearches } from '../hooks/useRecentSearches.js';
 import { useSortedRepos } from '../hooks/useSortedRepos.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function UserPage() {
   const { username } = useParams();
   const decodedUsername = decodeURIComponent(username);
+  const { t } = useLanguage();
 
   const userQuery = useUser(decodedUsername);
   const reposQuery = useUserRepos(decodedUsername);
@@ -36,11 +38,11 @@ export default function UserPage() {
   }
 
   if (userQuery.isError) {
-    const fallback = `No GitHub user found for "${decodedUsername}".`;
+    const fallback = t('user.errorNotFound', { username: decodedUsername });
     return (
       <ErrorState
         message={getErrorMessage(userQuery.error, fallback)}
-        actionLabel="Go back"
+        actionLabel={t('user.goBack')}
         onAction={() => window.history.back()}
       />
     );
@@ -59,7 +61,7 @@ export default function UserPage() {
         <div className="col-lg-9 col-md-8">
           <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
             <h5 className="mb-0 fw-semibold">
-              Repositories
+              {t('user.repositories')}
               <span className="badge bg-secondary fw-normal ms-1">{user.public_repos}</span>
             </h5>
             {repos.length > 0 && (

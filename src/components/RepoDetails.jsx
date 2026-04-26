@@ -1,5 +1,6 @@
 import LanguageBadge from './LanguageBadge.jsx';
 import { formatCount, formatDate, timeAgo } from '../utils/format.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 function StatBox({ icon, value, label }) {
   return (
@@ -14,6 +15,7 @@ function StatBox({ icon, value, label }) {
 }
 
 function VisibilityBadge({ isPrivate }) {
+  const { t } = useLanguage();
   const cls = isPrivate
     ? 'bg-danger text-danger border-danger'
     : 'bg-success text-success border-success';
@@ -21,12 +23,14 @@ function VisibilityBadge({ isPrivate }) {
   return (
     <span className={`badge bg-opacity-15 border border-opacity-25 px-2 py-1 ${cls}`}>
       <i className={`bi bi-${isPrivate ? 'lock' : 'unlock'} me-1`} />
-      {isPrivate ? 'Private' : 'Public'}
+      {isPrivate ? t('repo.private') : t('repo.public')}
     </span>
   );
 }
 
 export default function RepoDetails({ repo }) {
+  const { t } = useLanguage();
+
   return (
     <div className="row justify-content-center">
       <div className="col-xl-8 col-lg-9">
@@ -50,12 +54,12 @@ export default function RepoDetails({ repo }) {
               <VisibilityBadge isPrivate={repo.private} />
               {repo.fork && (
                 <span className="badge bg-secondary bg-opacity-15 text-secondary border border-secondary border-opacity-25 px-2 py-1">
-                  Fork
+                  {t('repo.fork')}
                 </span>
               )}
               {repo.archived && (
                 <span className="badge bg-warning bg-opacity-15 text-warning border border-warning border-opacity-25 px-2 py-1">
-                  Archived
+                  {t('repo.archived')}
                 </span>
               )}
             </div>
@@ -66,22 +70,22 @@ export default function RepoDetails({ repo }) {
               <StatBox
                 icon="bi-star-fill text-warning"
                 value={formatCount(repo.stargazers_count)}
-                label="Stars"
+                label={t('repo.stars')}
               />
               <StatBox
                 icon="bi-diagram-2-fill text-primary"
                 value={formatCount(repo.forks_count)}
-                label="Forks"
+                label={t('repo.forks')}
               />
               <StatBox
                 icon="bi-eye-fill text-info"
                 value={formatCount(repo.watchers_count)}
-                label="Watchers"
+                label={t('repo.watchers')}
               />
               <StatBox
                 icon="bi-exclamation-circle text-danger"
                 value={formatCount(repo.open_issues_count)}
-                label="Issues"
+                label={t('repo.issues')}
               />
             </div>
 
@@ -97,11 +101,11 @@ export default function RepoDetails({ repo }) {
               )}
               <span>
                 <i className="bi bi-calendar3 me-1" />
-                Created {formatDate(repo.created_at)}
+                {t('repo.created', { date: formatDate(repo.created_at) })}
               </span>
               <span>
                 <i className="bi bi-arrow-clockwise me-1" />
-                Updated {timeAgo(repo.updated_at)}
+                {t('repo.updated', { time: timeAgo(repo.updated_at) })}
               </span>
             </div>
 
@@ -123,7 +127,7 @@ export default function RepoDetails({ repo }) {
                 className="btn btn-dark"
               >
                 <i className="bi bi-github me-2" />
-                View on GitHub
+                {t('repo.viewOnGitHub')}
               </a>
               {repo.homepage && (
                 <a
@@ -133,7 +137,7 @@ export default function RepoDetails({ repo }) {
                   className="btn btn-outline-secondary"
                 >
                   <i className="bi bi-globe me-1" />
-                  Website
+                  {t('repo.website')}
                 </a>
               )}
             </div>

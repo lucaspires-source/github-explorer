@@ -3,7 +3,6 @@ export const translations = {
     navbar: {
       brand: 'GitHub Explorer',
       tagline: 'Search users & repositories',
-      toggleLabel: 'PT',
     },
     home: {
       title: 'GitHub Explorer',
@@ -57,7 +56,6 @@ export const translations = {
     navbar: {
       brand: 'GitHub Explorer',
       tagline: 'Pesquise usuários e repositórios',
-      toggleLabel: 'EN',
     },
     home: {
       title: 'GitHub Explorer',

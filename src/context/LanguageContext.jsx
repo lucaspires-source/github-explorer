@@ -6,10 +6,6 @@ const LanguageContext = createContext(null);
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState('en');
 
-  function toggleLanguage() {
-    setLanguage(prev => (prev === 'en' ? 'pt' : 'en'));
-  }
-
   function t(key, vars = {}) {
     const keys = key.split('.');
     let value = translations[language];
@@ -21,7 +17,7 @@ export function LanguageProvider({ children }) {
   }
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -167,5 +167,4 @@ github-explorer/
 |---|---|
 | `GET /users/{username}` | Perfil do usuário |
 | `GET /users/{username}/repos?per_page=100` | Repositórios do usuário |
-| `GET /repos/{owner}/{repo}` | Detalhes do repositório |
-# github-explorer
+| `GET /repos/{owner}/{repo}` | Detalhes do repositório 
